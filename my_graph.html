@@ -1,0 +1,78 @@
+<!DOCTYPE html lang='en'>
+<html>
+
+<meta charset='utf-8'/>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script
+			  src="https://code.jquery.com/jquery-3.4.0.min.js"
+			  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+			  crossorigin="anonymous"></script>
+
+<script>
+var chart1; // global
+
+/**
+ * Request data from the server, add it to the graph and set a timeout
+ * to request again
+ */
+function requestData1() {
+    $.ajax({
+        url: 'http://localhost:8080/data',
+        success: function(point) {
+            var series = chart1.series[0],
+                shift = series.data.length > 20; // shift if the series is
+                                                 // longer than 20
+
+            // add the point
+            chart1.series[0].addPoint(point, true, shift);
+
+            // call it again after one second
+            setTimeout(requestData1, 1000);
+        },
+        cache: false
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    chart1 = Highcharts.chart('container', {
+        chart: {
+            type: 'spline',
+            events: {
+                load: requestData1
+            }
+        },
+        title: {
+            text: 'Data Collection'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150,
+            maxZoom: 20 * 1000
+        },
+        yAxis: {
+            minPadding: 0.2,
+            maxPadding: 0.2,
+            title: {
+                text: 'Value',
+                margin: 80
+            }
+        },
+        series: [{
+            name: 'Random data',
+            data: []
+        }]
+    });
+});
+</script>
+<title>Sample stuff</title>
+</head>
+<body>
+
+    <div id="container">
+        </div>
+
+</body>
+
+</html>
+
