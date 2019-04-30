@@ -2,7 +2,7 @@ from bottle import route, run, static_file, response, hook
 import time
 import json
 import random 
-#from random import randint
+import humidity_sensor
 import os
 
 @hook('after_request')
@@ -19,14 +19,16 @@ def enable_cors():
 @route('/data1')
 def index():
     x = time.time()*1000
-    y = random.uniform(86,95)
+    #y = random.uniform(86,95)
+    y = humidity_sensor()[0]
     response.content_type = "application/json"
     return json.dumps([x,y])
 
 @route('/data2')
 def index():
     x = time.time()*1000
-    y = random.uniform(27,30)
+    #y = random.uniform(27,30)
+    y = humidity_sensor()[1]
     response.content_type = "application/json"
     return json.dumps([x,y])
 
