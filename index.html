@@ -7,125 +7,126 @@
 
   <!-- other scripts -->
   <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script
-      src="https://code.jquery.com/jquery-3.4.0.min.js"
-      integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
-      crossorigin="anonymous">
-  </script>
+  <script src="https://code.jquery.com/jquery-3.4.0.min.js"
+    integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous">
+    </script>
+  <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
 
-<script>
-  var chart1; // global
-  var chart2; // global
-  
-  /**
-   * Request data from the server, add it to the graph and set a timeout
-   * to request again
-   */
-  function requestData1() {
+  <script>
+    var chart1; // global
+    var chart2; // global
+
+    /**
+     * Request data from the server, add it to the graph and set a timeout
+     * to request again
+     */
+    function requestData1() {
       $.ajax({
-          url: 'http://localhost:8080/data1',
-          success: function(point) {
-              var series = chart1.series[0],
-                  shift = series.data.length > 20; // shift if the series is
-                                                   // longer than 20
-  
-              // add the point
-              chart1.series[0].addPoint(point, true, shift);
-  
-              // call it again after one second
-              setTimeout(requestData1, 1000);
-          },
-          cache: false
+        url: 'http://localhost:8080/data1',
+        success: function (point) {
+          var series = chart1.series[0],
+            shift = series.data.length > 20; // shift if the series is
+          // longer than 20
+
+          // add the point
+          chart1.series[0].addPoint(point, true, shift);
+
+          // call it again after one second
+          setTimeout(requestData1, 1000);
+        },
+        cache: false
       });
-  }
-  
-  
-  document.addEventListener('DOMContentLoaded', function() {
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
       chart1 = Highcharts.chart('container', {
-          chart: {
-              type: 'spline',
-              events: {
-                  load: requestData1
-              }
-          },
+        chart: {
+          type: 'area',
+          events: {
+            load: requestData1
+          }
+        },
+        title: {
+          text: 'Humidity Data'
+        },
+        xAxis: {
+          type: 'datetime',
+          tickPixelInterval: 150,
+          maxZoom: 20 * 1000
+        },
+        yAxis: {
+          minPadding: 0.2,
+          maxPadding: 0.2,
           title: {
-              text: 'Humidity Data'
-          },
-          xAxis: {
-              type: 'datetime',
-              tickPixelInterval: 150,
-              maxZoom: 20 * 1000
-          },
-          yAxis: {
-              minPadding: 0.2,
-              maxPadding: 0.2,
-              title: {
-                  text: '% Humidity',
-                  margin: 80
-              }
-          },
-          series: [{
-              name: 'Humidity Readings',
-              data: []
-          }]
+            text: '% Humidity',
+            margin: 80
+          }
+        },
+        series: [{
+          name: 'Humidity Readings',
+          data: []
+        }]
       });
-  });
+    });
 
- 
-  
-  /**
-   * Request data from the server, add it to the graph and set a timeout
-   * to request again
-   */
-  function requestData2() {
+
+
+    /**
+     * Request data from the server, add it to the graph and set a timeout
+     * to request again
+     */
+    function requestData2() {
       $.ajax({
-          url: 'http://localhost:8080/data2',
-          success: function(point) {
-              var series = chart2.series[0],
-                  shift = series.data.length > 20; // shift if the series is
-                                                   // longer than 20
-  
-              // add the point
-              chart2.series[0].addPoint(point, true, shift);
-  
-              // call it again after one second
-              setTimeout(requestData2, 1000);
-          },
-          cache: false
+        url: 'http://localhost:8080/data2',
+        success: function (point) {
+          var series = chart2.series[0],
+            shift = series.data.length > 20; // shift if the series is
+          // longer than 20
+
+          // add the point
+          chart2.series[0].addPoint(point, true, shift);
+
+          // call it again after one second
+          setTimeout(requestData2, 1000);
+        },
+        cache: false
       });
-  }
-  
-  
-  document.addEventListener('DOMContentLoaded', function() {
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
       chart2 = Highcharts.chart('container2', {
-          chart: {
-              type: 'spline',
-              events: {
-                  load: requestData2
-              }
-          },
-          title: {
-              text: 'Temperature Data'
-          },
+        chart: {
+          type: 'area',
+          events: {
+            load: requestData2
+          }
+        },
+        title: {
+          text: 'Temperature Data'
+        },
+       
           xAxis: {
-              type: 'datetime',
-              tickPixelInterval: 150,
-              maxZoom: 20 * 1000
-          },
-          yAxis: {
-              minPadding: 0.2,
-              maxPadding: 0.2,
-              title: {
-                  text: 'Temp *C',
-                  margin: 80
-              }
-          },
-          series: [{
-              name: 'Temperature',
-              data: []
-          }]
+          type: 'datetime',
+          tickPixelInterval: 150,
+          maxZoom: 20 * 1000
+        },
+        yAxis: {
+          minPadding: 0.2,
+          maxPadding: 0.2,
+          title: {
+            text: 'Temp *C',
+            margin: 80
+          }
+        },
+        series: [{
+          name: 'Temperature',
+          data: [],
+          //color:  'url(#highcharts-default-pattern-0)',
+        }]
       });
-  });
+    });
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -177,7 +178,7 @@
               <i class="mdi mdi-file-document-box"></i>
               <span class="count">7</span>
             </a> -->
-            <!-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+          <!-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
               <div class="dropdown-item">
                 <p class="mb-0 font-weight-normal float-left">You have 7 unread mails
                 </p>
@@ -228,11 +229,13 @@
             </div> -->
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+              data-toggle="dropdown">
               <i class="mdi mdi-bell"></i>
               <span class="count">4</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+              aria-labelledby="notificationDropdown">
               <a class="dropdown-item">
                 <p class="mb-0 font-weight-normal float-left">You have 4 new notifications
                 </p>
@@ -265,21 +268,21 @@
                     2 sec ago
                   </p>
                 </div>
-                
+
               </a>
               <div class="dropdown-divider"></div>
               <!-- <a class="dropdown-item preview-item"> -->
-                <!-- <div class="preview-thumbnail"> -->
-                  <div class="preview-icon bg-info">
-                    <!-- <i class="mdi mdi-email-outline mx-0"></i> -->
-                  </div>
-                <!-- </div> -->
-                <div class="preview-item-content">
-                  <!-- <h6 class="preview-subject font-weight-medium text-dark">New user registration</h6> -->
-                  <!-- <p class="font-weight-light small-text">
+              <!-- <div class="preview-thumbnail"> -->
+              <div class="preview-icon bg-info">
+                <!-- <i class="mdi mdi-email-outline mx-0"></i> -->
+              </div>
+              <!-- </div> -->
+              <div class="preview-item-content">
+                <!-- <h6 class="preview-subject font-weight-medium text-dark">New user registration</h6> -->
+                <!-- <p class="font-weight-light small-text">
                     2 days ago
                   </p> -->
-                </div>
+              </div>
               </a>
             </div>
           </li>
@@ -317,7 +320,8 @@
             </div>
           </li>
         </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>
         </button>
       </div>
@@ -427,8 +431,11 @@
           <div class="row purchace-popup">
             <div class="col-12">
               <span class="d-block d-md-flex align-items-center">
-                <span><h2>Project Description</h2></span>
-                <h3>A study to determine the effect of indoor environment factors have on the mood of students during learning sessions</h3>
+                <span>
+                  <h2>Project Description</h2>
+                </span>
+                <h3>A study to determine the effect of indoor environment factors have on the mood of students during
+                  learning sessions</h3>
               </span>
             </div>
           </div>
@@ -448,7 +455,8 @@
                     </div>
                   </div>
                   <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Amount of water vapour present in air measured in percentages
+                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Amount of water vapour present in air
+                    measured in percentages
                   </p>
                 </div>
               </div>
@@ -488,7 +496,8 @@
                     </div>
                   </div>
                   <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i>Binary Record of presence or absence of sound
+                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i>Binary Record of presence or absence of
+                    sound
                   </p>
                 </div>
               </div>
@@ -594,7 +603,7 @@
                     </div>
                     <div class="weakly-weather-item">
                       <p class="mb-1">
-                        Mon 
+                        Mon
                       </p>
                       <i class="mdi mdi-weather-snowy"></i>
                       <p class="mb-0">
@@ -615,7 +624,7 @@
                       <p class="mb-2">Best learning environment</p>
                       <h4 class="display-3">24.2
                         <span class="symbol">&deg;</span>C</h4>
-                        <h4 class="display-3"> 57.5%</h4>
+                      <h4 class="display-3"> 57.5%</h4>
                     </div>
                     <div class="side-right">
                       <small class="text-muted">2019</small>
@@ -624,9 +633,9 @@
                   <div class="wrapper d-flex justify-content-between">
                     <div class="side-left">
                       <p class="mb-2">Worst learning environment</p>
-                                            <h4 class="display-3">30.7
+                      <h4 class="display-3">30.7
                         <span class="symbol">&deg;</span>C</h4>
-                        <h4 class="display-3"> 95.6%</h4>
+                      <h4 class="display-3"> 95.6%</h4>
                     </div>
                     <div class="side-right">
                       <small class="text-muted">2019</small>
@@ -658,7 +667,7 @@
           </div>
 
           <!-- Swapped -->
-          <div class="row"> 
+          <div class="row">
             <div class="col-md-12 grid-margin">
               <div class="card">
                 <div class="card-body">
@@ -680,12 +689,12 @@
                     <canvas id="dashboard-area-chart" height="80"></canvas>
                   </div>
                   <div id="container2">
-                      <canvas id="dashboard-area-chart" height="80"></canvas>
-                    </div>
+                    <canvas id="dashboard-area-chart" height="80"></canvas>
+                  </div>
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
 
           <!-- <d iv class="main-panel">
             <div class="content-wrapper">

@@ -1,7 +1,8 @@
 from bottle import route, run, static_file, response, hook 
 import time
 import json
-from random import randint
+import random 
+#from random import randint
 import os
 
 @hook('after_request')
@@ -18,14 +19,14 @@ def enable_cors():
 @route('/data1')
 def index():
     x = time.time()*1000
-    y = randint(85,100)
+    y = random.uniform(86,95)
     response.content_type = "application/json"
     return json.dumps([x,y])
 
 @route('/data2')
 def index():
     x = time.time()*1000
-    y = randint(27,30)
+    y = random.uniform(27,30)
     response.content_type = "application/json"
     return json.dumps([x,y])
 
