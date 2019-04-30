@@ -9,7 +9,8 @@ def check_humidity():
 		humi, temp = dht.read_retry(dht.DHT22, 4)  # Reading humidity and temperature
 		my_time = time()*1000
 		print('Temp: {0:0.1f}*C  Humidity: {1:0.1f}%'.format(temp, humi))
-		sleep(5)
+		return(temp,humi)
+		sleep(2)
 
 
-check_humidity()
+#check_humidity()
